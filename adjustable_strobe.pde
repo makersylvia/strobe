@@ -2,9 +2,8 @@
  * Super Simple Ajustable Strobe for Arduino - Learning Version
  * by TechNinja and SuperAwesomeSylvia - First release: September 2010
  *
- * Part of Sylvia's Super Awesome Maker Show! - Episode 3
- *  http://tn42.com/maker-show
- *  http://tn42.com/strobe
+ * Part of Sylvia's Super Awesome Maker Show! - Season 1, Episode 3
+ *  http://sylviashow.com/strobe
  *
  * Fork this on GitHub:
  *  http://github.com/techninja/adjustable_strobe-learning
@@ -31,7 +30,7 @@
  * - Point the light at something spinning, and slowly rotate the potentiometer.
  * If the spinning object is within the given range, it will align the flashing
  * will align with the rate of the object and appear to slow it down. Stroboscopes rock!
- * 
+ *
  *
  * References:
  *  http://arduino.cc/en/Tutorial/AnalogInput
