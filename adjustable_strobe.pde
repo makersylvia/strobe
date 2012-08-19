@@ -39,27 +39,27 @@
  */
 
 /******* -----=====!! EASY STUFF TO MESS WITH !!=====------ ******/
-  
+
   // What analog pin should we use to read the value from the potentiometer?
   int potentiometer_pin = 2; // Yep, you heard right: The coolest of the Analog pins...
-  
+
   // What pin is the LED connected to?
-  int led_pin = 13; // Contains a built in resistor (though it doesn't seem to matter much for strobes)
-  
-  // How much time should the light stay on between delay times (in Micro Seconds)? 
+  int led_pin = 12; // Contains a built in resistor (though it doesn't seem to matter much for strobes)
+
+  // How much time should the light stay on between delay times (in Micro Seconds)?
     /* Big number = more blur, more perceived brightness
      * Small number = less blur, less perceived brightness  */
   int on_time = 100; // 100 uSeconds makes a reasonable tradeoff
-  
+
   // How much should we multiply the incoming value by?
     /* Big number = less precision, more range
      * Small number = more precision, less range  */
   int analog_value_multiplier = 15; // 15 Seems to work well for fans =)
-  
+
   // What should the minimum delay be (in Micro Seconds)?
   // This sets the bottom delay range of the strobe, as a delay of 0 doesn't actually flash =P
   int minimum_delay = 500;
-  
+
 /******* -----=====^^ EASY STUFF TO MESS WITH ^^=====------ ******/
 
 
@@ -67,25 +67,31 @@
 int strobe_delay = 0;  
 
 void setup() {
-  // Tell the arduino to use the led_pin as an output. 
-  pinMode(led_pin, OUTPUT);  
+  // Tell the arduino to use the led_pin as an output.
+  pinMode(led_pin, OUTPUT);
 }
 
 void loop() {
   // Read the value from the potentiometer, and use it to make our strobe delay
   // by adding the minimum delay, then increasing it to a useful value with analog_value_multiplier
   strobe_delay = minimum_delay + analogRead(potentiometer_pin) * analog_value_multiplier;
-  
+
   // Switch the led_pin to HIGH! Sends out 5v to the led_pin.
   digitalWrite(led_pin, HIGH);
-  
+
   // Delay for the given on_time. (Limits Bluring)
   delayMicroseconds(on_time);
-  
-  // Turn off the led. Switch the led_pin to LOW.
+
+  // Switch the led_pin to LOW. Turn off the led.
   digitalWrite(led_pin, LOW);
-  
+
   // Delay for the strobe_delay time read from the potentiometer
-  // (less the time we already spent from leaving the LED on.
-  delayMicroseconds(strobe_delay - on_time); 
+  // (less the time we already spent from leaving the LED on.)
+
+  // delayMicroseconds() fails beyond 16,000 uS, so pass it off to delay() after 10k
+  if (strobe_delay > 10000){
+    delay((strobe_delay - on_time) / 1000);
+  }else{
+    delayMicroseconds(strobe_delay - on_time);
+  }
 }
