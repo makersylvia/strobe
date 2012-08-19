@@ -49,22 +49,23 @@
   // How much time should the light stay on between delay times (in Micro Seconds)?
     /* Big number = more blur, more perceived brightness
      * Small number = less blur, less perceived brightness  */
-  int on_time = 100; // 100 uSeconds makes a reasonable tradeoff
+  long on_time = 500; // 100 uSeconds makes a reasonable tradeoff
 
   // How much should we multiply the incoming value by?
     /* Big number = less precision, more range
      * Small number = more precision, less range  */
-  int analog_value_multiplier = 15; // 15 Seems to work well for fans =)
+  long analog_value_multiplier = 15; // 15 Seems to work well for fast fans =)
 
   // What should the minimum delay be (in Micro Seconds)?
   // This sets the bottom delay range of the strobe, as a delay of 0 doesn't actually flash =P
-  int minimum_delay = 500;
+  // The strobe starts with this is the "fastest" mode, and goes slower from there, adding to the delay
+  long minimum_delay = 500; // 500 (half a millisecond) is a great superfast start
 
 /******* -----=====^^ EASY STUFF TO MESS WITH ^^=====------ ******/
 
 
 // Initialize the number to hold our strobe delay. Isn't used till we get to the main loop
-int strobe_delay = 0;  
+long strobe_delay = 0;
 
 void setup() {
   // Tell the arduino to use the led_pin as an output.
